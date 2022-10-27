@@ -1,0 +1,11 @@
+package tdJava;
+import javax.swing.*;
+
+public class tdJava extends JFrame {
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

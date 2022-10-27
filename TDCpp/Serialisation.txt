@@ -1,0 +1,9 @@
+Photo
+photo1
+~/PHAM/INF224/TD1/Images/mt1.jpeg
+20
+20
+Video
+video1
+~/PHAM/INF224/TD1/Vids/vid1.mp4
+10

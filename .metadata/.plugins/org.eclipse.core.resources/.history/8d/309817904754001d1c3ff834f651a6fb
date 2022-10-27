@@ -1,0 +1,83 @@
+package tdJava;
+
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.*;
+
+/**
+ * @author PHAM Vu Hoang Anh
+ *         <p>
+ *         Java class with 1 JTextArea and 1 JPanel that contains 3 JButtons
+ *         <p>
+ *         JTextArea is in the center of the JFrame JPanel is in the South of
+ *         the JFrame 
+ *         <p>
+ *         Button1 adds a line of text to JTextArea 
+ *         <p>
+ *         Button2 adds a line of text to JTextArea 
+ *         <p>
+ *         Button3 terminate the program
+ */
+public class tdJava extends JFrame implements ActionListener {
+	JTextArea 	area;
+	JButton 	addText1;
+	JButton 	addText2;
+	JButton 	terminer;
+	JPanel      panl;
+
+	/**
+	 * Version of this class = 1
+	 * 
+	 * @see seriaVersionUID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructor of the class
+	 */
+	public tdJava() {
+		this.setPreferredSize( new Dimension(300, 500));
+		area = new JTextArea("TDJava TEXT AREA\n");
+		panl = new JPanel(new GridLayout(3,1));
+		area.setRows(10);
+		area.setColumns(10);
+		
+		JScrollPane scroll = new JScrollPane(area);
+		scroll.setViewportView(area);
+		
+		add(area);
+		add(scroll);
+		add(panl, BorderLayout.SOUTH);
+		panl.add(addText1 = new JButton("Button1"));
+		panl.add(addText2 = new JButton("Button2"));
+		panl.add(terminer = new JButton("Terminer"));
+
+		addText1.addActionListener(this);
+		addText2.addActionListener(this);
+		terminer.addActionListener(this);
+
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		pack();
+		setVisible(true);
+	}
+
+	/**BorderLayout
+	 * Listen to the action of buttons
+	 * @see tdJava	 
+	 */
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == addText1)
+			area.append("Button1 clicked !\n");
+		else if (e.getSource() == addText2)
+			area.append("Button2 clicked !\n");
+		else if (e.getSource() == terminer)
+			System.exit(0);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new tdJava();
+	}
+}

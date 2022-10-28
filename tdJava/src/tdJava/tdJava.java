@@ -26,9 +26,11 @@ public class tdJava extends JFrame implements ActionListener {
     JButton     addText2;
     JButton     terminer;
 
+    Client client;
 
     /**
-     * Version of this class = 1
+     * Version of this class = 1git
+     * 
      * 
      * @see seriaVersionUID
      */
@@ -41,9 +43,12 @@ public class tdJava extends JFrame implements ActionListener {
      * <p>
      * and a JScrollPane to scroll through the text area
      */
-    public tdJava() {
+    public tdJava(Client clnt, String msg) {
+    	// Lier client
+    	client = clnt;
+    	
         // Déclarer des nouvelles attributs 
-                    area    = new JTextArea("TDJava TEXT AREA\n", 20, 10);
+                    area    = new JTextArea(msg, 20, 10);
         JPanel      panl    = new JPanel(new GridLayout(3,1));
         JScrollPane scroll  = new JScrollPane(area);
         JMenuBar    menuBar = new JMenuBar();
@@ -68,12 +73,12 @@ public class tdJava extends JFrame implements ActionListener {
         terminer.addActionListener(this);
 
         // Ajouter des "actions" à toolBar et menu  
-        toolBar.add(new but1Listener("But1"));
-        toolBar.add(new but2Listener("But2"));
-        toolBar.add(new but3Listener("But3"));
-        menu.add(new but1Listener("But1"));
-        menu.add(new but2Listener("But2"));
-        menu.add(new but3Listener("But3"));
+        toolBar.add(new but1Listener("Find"));
+        toolBar.add(new but2Listener("Play"));
+        toolBar.add(new but3Listener("Quit"));
+        menu.add(new but1Listener("Find"));
+        menu.add(new but2Listener("Play"));
+        menu.add(new but3Listener("Quit"));
         
         // Réglages de la fenêtre
         this.setPreferredSize( new Dimension(300, 500) );
@@ -98,14 +103,16 @@ public class tdJava extends JFrame implements ActionListener {
     
     private class but1Listener extends AbstractAction {
         private static final long serialVersionUID = 1L;
-
+        
         public but1Listener ( String name ) {
             super(name);
         }
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            area.append("But1 clicked !\n");
+        	String media    = "";
+        	String response = client.send("find" + media);
+            area.append(response + "\n");
         }
     }
     
@@ -118,7 +125,9 @@ public class tdJava extends JFrame implements ActionListener {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            area.append("But2 clicked !\n");
+        	String media    = "";
+        	String response = client.send("play" + media);
+            area.append(response + "\n");
         }
     }
     
@@ -131,12 +140,25 @@ public class tdJava extends JFrame implements ActionListener {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            area.append("But3 clicked !\n");
+        	String response = client.send("quit");
+            area.append(response + "\n");
+            System.exit(0);
         }
     }
 
     public static void main(String[] args) {
+    	String DEFAULT_HOST = "localhost";
+    	int    DEFAULT_PORT = 3331;
         // TODO Auto-generated method stub
-        new tdJava();
+    	Client client = null;
+/*    	try {
+    		client = new Client(DEFAULT_HOST, DEFAULT_PORT);
+    	}
+    	catch ( Exception e) {
+    		System.err.println("Errow when creating client !");
+    		System.exit(1);
+    	}*/
+    	String msg = "Connecting to " + DEFAULT_HOST + " at port " + DEFAULT_PORT+"\n"; 
+        new tdJava(client, msg);
     }
 }
